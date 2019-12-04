@@ -10,7 +10,7 @@ userController.post('/', httpValidationWrapper(validateUser), asyncHttpHandlerWr
     const {email, password} = req.body;
 
     if (!!await User.findOne({email})) {
-        throw new HttpException("User already exists.", HttpStatus.CONFLICT)
+        throw new HttpException('User already exists.', HttpStatus.CONFLICT)
     }
 
     const user = new User({
@@ -21,7 +21,7 @@ userController.post('/', httpValidationWrapper(validateUser), asyncHttpHandlerWr
     await user.save();
 
     const token = user.generateAuthToken();
-    res.header("x-auth-token", token).send({
+    res.header('x-auth-token', token).send({
         _id: user._id,
         email,
     });
