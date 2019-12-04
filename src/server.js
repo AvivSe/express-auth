@@ -29,3 +29,4 @@ mongoose.connect("mongodb://localhost/express-auth", {
 app.use(exceptionController);
 app.listen(port);
 console.log('app running on port ', port);
+export default app;
