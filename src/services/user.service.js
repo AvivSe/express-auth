@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
 
-const createUser = ({ email, password }) => {
+const createUser = ({email, password}) => {
 
-}
+};
 export default {
     createUser
 }

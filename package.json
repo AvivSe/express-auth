@@ -2,9 +2,11 @@
   "name": "express-auth",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "nodemon index.js --exec babel-node --presets babel-preset-env",
+    "start": "nodemon src/server.js --exec babel-node",
+    "build": "babel src --out-dir dist",
+    "serve": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "avivsegal",
@@ -18,10 +20,10 @@
     "mongoose": "^5.7.13"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.6",
-    "babel-preset-env": "^1.7.0",
+    "@babel/cli": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
     "nodemon": "^2.0.1"
   }
 }
