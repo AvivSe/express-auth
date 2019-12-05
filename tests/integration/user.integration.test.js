@@ -1,20 +1,22 @@
-import {HttpStatus} from "../../src/exceptions/http.exception";
-import {doPost} from "./http.util";
-import {Message} from "../test.consts";
+import {doPost, exceptInvalidArgument} from "./http.util";
+import {Fields} from "../test.consts";
+
+const validUser = {
+    email: 'test@express.auth',
+    password: '12345',
+};
+
+const invalidUser = {
+    email: '@',
+    password: '1'
+};
 
 describe('User', () => {
-
-    it('should fail with bad request create a new user', async () => {
-        const res = await doPost({
-            email: 1,
-            password: '12345',
+    Object.values(Fields).forEach(field => {
+        it(`should fail with bad request create a new user when ${field} is invalid`, async () => {
+            exceptInvalidArgument(field, await doPost({
+                ...validUser, [field]: invalidUser[field]
+            }));
         });
-        expect(res.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-
-        const {message, errors} = JSON.parse(res.text);
-        expect(message).toBe(Message.INVALID_ARGUMENTS);
-        expect(errors && errors.length).toBeGreaterThan(0);
-        expect(errors.findIndex(error => error.param === 'email')).toBeGreaterThan(-1);
-
     });
 });

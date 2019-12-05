@@ -6,3 +6,8 @@ export const Path = {
 export const Message = {
     INVALID_ARGUMENTS:"Invalid arguments."
 };
+
+export const Fields = {
+    EMAIL: 'email',
+    PASSWORD: 'password',
+};

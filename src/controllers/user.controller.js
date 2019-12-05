@@ -3,28 +3,25 @@ import bcrypt from 'bcrypt';
 import User, {validateUser} from '../models/user.model'
 import HttpException, {HttpStatus} from '../exceptions/http.exception';
 import {asyncHttpHandlerWrapper, httpValidationWrapper} from "../httpBroker";
+import service from "../services/user.service";
 
 const userController = Router();
 
-userController.post('/', httpValidationWrapper(validateUser), asyncHttpHandlerWrapper(async (req, res) => {
-    const {email, password} = req.body;
+userController.post('/', httpValidationWrapper(validateUser),
+    asyncHttpHandlerWrapper(async ({ body: user}, res) => {
+        const {email} = user;
 
-    if (!!await User.findOne({email})) {
-        throw new HttpException('User already exists.', HttpStatus.CONFLICT)
-    }
+        try {
+            user = await service.createUser(user);
+        } catch (e) {
+            throw new HttpException(e);
+        }
 
-    const user = new User({
-        email,
-        password: await bcrypt.hash(password, 10),
-    });
-
-    await user.save();
-
-    const token = user.generateAuthToken();
-    res.header('x-auth-token', token).send({
-        _id: user._id,
-        email,
-    });
-}));
+        const token = user.generateAuthToken();
+        res.header('x-auth-token', token).send({
+            _id: user._id,
+            email,
+        });
+    }));
 
 export default userController;
