@@ -5,12 +5,10 @@ import {UserExceptions} from "../controllers/user.excpetion.controller";
 class UserService {
 
     static async hashPassword(password) {
-
         return await bcrypt.hash(password, 10);
     }
 
     static async createUser(user) {
-
         const {email, password} = user;
 
         if (!!this.getUser(email)) {
@@ -30,12 +28,10 @@ class UserService {
     }
 
     static async getUsers(filters = {}) {
-
         return User.find();
     }
 
     static async putUser(email, update) {
-
         let user;
 
         if (!await this.getUser(email)) {
