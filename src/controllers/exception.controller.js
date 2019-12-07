@@ -1,5 +1,5 @@
-import {userExceptionToHttpException} from "../handlers/user.excpetion.map";
-import {authExceptionToHttpException} from "../handlers/auth.exception.map";
+import {userExceptionToHttpException} from "../exceptions/user.excpetion.map";
+import {authExceptionToHttpException} from "../exceptions/auth.exception.map";
 import HttpException from "../exceptions/http.exception";
 
 const handlerNameToExceptionMap = {

@@ -1,7 +1,7 @@
 import request from "supertest";
 import server from "../../src/server";
 import {Message, Path} from "../test.consts";
-import {HttpStatus} from "../../src/exceptions/http.exception";
+import {HttpStatus} from "../../src/util/http-broker";
 
 export const doPost = async data => {
     return request(server)

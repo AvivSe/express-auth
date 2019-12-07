@@ -1,6 +1,7 @@
 import jwt, {sign} from 'jsonwebtoken';
-import {AuthExceptions} from "../handlers/auth.exception.map";
-
+import {AuthExceptions} from "../exceptions/auth.exception.map";
+import userService from './user.service'
+import hashPassword from '../util/hash-password'
 const privateKey = 'change-me';
 
 class AuthService {
@@ -11,13 +12,21 @@ class AuthService {
 
   static isAuthenticate(token) {
     try {
-      const decoded = jwt.verify(token, privateKey);
-      console.log(decoded);
-      return true;
+      return  jwt.verify(token, privateKey);
     } catch (ex) {
       throw AuthExceptions.INVALID_TOKEN;
     }
   };
 
+  static async login(email, password) {
+    password = await hashPassword(password);
+    const user = await userService.getUser(email);
+
+    if(!user || password !== user.password) {
+      throw AuthExceptions.INVALID_MATCH;
+    }
+
+    return { user , token: this.generateAuthToken(user) };
+  }
 }
 export default AuthService;

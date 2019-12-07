@@ -1,5 +1,5 @@
 import {validationResult} from "express-validator";
-import HttpException from "./exceptions/http.exception";
+import HttpException from "../exceptions/http.exception";
 
 export const HttpStatus = {
     OK: 200,

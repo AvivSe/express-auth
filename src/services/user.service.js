@@ -1,12 +1,7 @@
 import User from "../models/user.model";
-import bcrypt from 'bcrypt';
-import {UserExceptions} from "../handlers/user.excpetion.map";
-
+import {UserExceptions} from "../exceptions/user.excpetion.map";
+import hashPassword from '../util/hash-password'
 class UserService {
-
-    static async hashPassword(password) {
-        return await bcrypt.hash(password, 10);
-    }
 
     static async createUser(user) {
         const {email, password} = user;
@@ -17,7 +12,7 @@ class UserService {
 
         user = new User({
             email,
-            password: await this.hashPassword(password),
+            password: await hashPassword(password),
         });
 
         await user.save();
@@ -39,7 +34,7 @@ class UserService {
         }
 
         if (!!update.password) {
-            update.password = await this.hashPassword(update.password)
+            update.password = await hashPassword(update.password)
         }
 
         if(!(user = await User.findOneAndUpdate({email}, update))) {

@@ -1,10 +1,9 @@
-import {HttpStatus} from "../httpBroker";
+import {HttpStatus} from "../util/http-broker";
 
 export const UserExceptions = {
   CONFLICT: "CONFLICT",
   NO_SUCH_ENTITY: "NO_SUCH_ENTITY",
   PUT_FAILED: "PUT_FAILED",
-
 };
 
 export const userExceptionToHttpException = {

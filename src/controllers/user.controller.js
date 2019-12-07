@@ -1,9 +1,9 @@
 import {Router} from 'express';
 import {validateUser} from '../models/user.model'
-import {asyncHttpHandlerWrapper, httpValidationWrapper} from "../httpBroker";
+import {asyncHttpHandlerWrapper, httpValidationWrapper} from "../util/http-broker";
 import service from "../services/user.service";
 import authService from '../services/auth.service';
-import {HttpStatus} from "../httpBroker";
+import {HttpStatus} from "../util/http-broker";
 import {genericExceptionsHandler} from "./exception.controller";
 const userController = Router();
 
