@@ -2,9 +2,9 @@ import {Router} from 'express';
 import {validateUser} from '../models/user.model'
 import {asyncHttpHandlerWrapper, httpValidationWrapper} from "../httpBroker";
 import service from "../services/user.service";
-import UserExceptionController from './user.excpetion.controller';
 import authService from '../services/auth.service';
-import {HttpStatus} from "../exceptions/http.exception";
+import {HttpStatus} from "../httpBroker";
+import {genericExceptionsHandler} from "./exception.controller";
 const userController = Router();
 
 userController.get('/:email', asyncHttpHandlerWrapper(async ({ params }, res) => {
@@ -30,5 +30,5 @@ userController.put('/:email', asyncHttpHandlerWrapper(async ({ body: update, par
   })
 );
 
-userController.use(UserExceptionController);
+userController.use(genericExceptionsHandler('User'));
 export default userController;
