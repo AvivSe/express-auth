@@ -4,6 +4,7 @@ export const HttpStatus = {
     BAD_REQUEST: 400,
     CREATED: 201,
     INTERNAL: 500,
+    NOT_FOUND: 404,
 };
 export default class HttpException {
     constructor({message, status, errors}) {
