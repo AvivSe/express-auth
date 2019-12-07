@@ -1,27 +1,22 @@
 import {Router} from 'express';
-import bcrypt from 'bcrypt';
-import User, {validateUser} from '../models/user.model'
-import HttpException, {HttpStatus} from '../exceptions/http.exception';
+import {validateUser} from '../models/user.model'
+import HttpException from '../exceptions/http.exception';
 import {asyncHttpHandlerWrapper, httpValidationWrapper} from "../httpBroker";
 import service from "../services/user.service";
-
+import UserExceptionController from './user.excpetion.controller';
 const userController = Router();
 
 userController.post('/', httpValidationWrapper(validateUser),
     asyncHttpHandlerWrapper(async ({ body: user}, res) => {
         const {email} = user;
-
-        try {
-            user = await service.createUser(user);
-        } catch (e) {
-            throw new HttpException(e);
-        }
-
+        user = await service.createUser(user);
         const token = user.generateAuthToken();
         res.header('x-auth-token', token).send({
             _id: user._id,
             email,
         });
-    }));
+    })
+);
 
+userController.use(UserExceptionController);
 export default userController;

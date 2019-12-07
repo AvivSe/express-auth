@@ -6,7 +6,7 @@ export const HttpStatus = {
     INTERNAL: 500,
 };
 export default class HttpException {
-    constructor(message, status, errors) {
+    constructor({message, status, errors}) {
         this.message = message;
         this.status = status;
         this.errors = errors;
